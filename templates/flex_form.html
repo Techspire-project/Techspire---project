@@ -1,0 +1,27 @@
+{% extends "form_base.html" %}
+{% set page_title = "Flex / Banner Design" %}
+{% set form_title = "🎨 FLEX DESIGN ORDER" %}
+{% block form_fields %}
+<div class="row g-3">
+  <div class="col-md-6">
+    <label class="form-label">Your Name *</label>
+    <input type="text" name="name" class="form-control" required placeholder="Enter your name"/>
+  </div>
+  <div class="col-md-6">
+    <label class="form-label">WhatsApp Number *</label>
+    <input type="tel" name="whatsapp" class="form-control" required placeholder="10-digit number" pattern="[0-9]{10}"/>
+  </div>
+  <div class="col-12">
+    <label class="form-label">Purpose of Flex *</label>
+    <input type="text" name="purpose" class="form-control" required placeholder="e.g. Shop board, Event banner, Birthday"/>
+  </div>
+  <div class="col-12">
+    <label class="form-label">Content Details *</label>
+    <textarea name="content_details" class="form-control" rows="4" required placeholder="All text, names, dates, slogans to include..."></textarea>
+  </div>
+  <div class="col-12">
+    <label class="form-label">Required Size *</label>
+    <input type="text" name="required_size" class="form-control" required placeholder="e.g. 4ft x 2ft, 3ft x 1.5ft"/>
+  </div>
+</div>
+{% endblock %}

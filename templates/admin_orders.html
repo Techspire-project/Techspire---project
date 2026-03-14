@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Orders - TechSpire Admin</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <link rel="stylesheet" href="/static/css/style.css"/>
+  <style>
+    .modal-content { background:#0a1a2a; border:1px solid var(--glass-border); color:var(--text-primary); }
+    .modal-header { border-bottom:1px solid var(--glass-border); }
+    .modal-footer { border-top:1px solid var(--glass-border); }
+    .btn-close { filter:invert(1); }
+  </style>
+</head>
+<body>
+<div style="display:flex;flex-wrap:wrap;position:relative;z-index:1;">
+  <!-- Sidebar -->
+  <div class="admin-sidebar">
+    <div class="admin-logo">⚡ TECHSPIRE<br/><small style="font-size:.6rem;color:var(--text-muted);letter-spacing:1px;">ADMIN PANEL</small></div>
+    <a href="/admin" class="admin-nav-link">📊 Dashboard</a>
+    <div style="font-size:.7rem;color:var(--text-muted);padding:8px 14px;margin-top:8px;letter-spacing:1px;">ORDERS</div>
+    <a href="/admin/orders/project_orders" class="admin-nav-link {% if table=='project_orders' %}active{% endif %}">💻 Projects</a>
+    <a href="/admin/orders/flex_orders" class="admin-nav-link {% if table=='flex_orders' %}active{% endif %}">🎨 Flex</a>
+    <a href="/admin/orders/invitation_orders" class="admin-nav-link {% if table=='invitation_orders' %}active{% endif %}">💌 Invitations</a>
+    <a href="/admin/orders/ppt_orders" class="admin-nav-link {% if table=='ppt_orders' %}active{% endif %}">📊 PPT</a>
+    <a href="/admin/orders/paper_orders" class="admin-nav-link {% if table=='paper_orders' %}active{% endif %}">📝 Paper</a>
+    <a href="/admin/orders/report_orders" class="admin-nav-link {% if table=='report_orders' %}active{% endif %}">📄 Reports</a>
+    <a href="/admin/orders/article_orders" class="admin-nav-link {% if table=='article_orders' %}active{% endif %}">✍️ Articles</a>
+    <a href="/admin/orders/website_orders" class="admin-nav-link {% if table=='website_orders' %}active{% endif %}">🌐 Websites</a>
+    <div style="margin-top:2rem;">
+      <a href="/admin/logout" class="admin-nav-link" style="color:#ff6b6b;">🚪 Logout</a>
+    </div>
+  </div>
+
+  <!-- Content -->
+  <div class="admin-content">
+    <h1 style="font-family:'Orbitron',monospace;font-size:1.4rem;color:var(--neon-blue);margin-bottom:.5rem;">
+      {{ table.replace('_orders','').upper() }} ORDERS
+    </h1>
+    <p style="color:var(--text-muted);font-size:.85rem;margin-bottom:2rem;">Total: {{ orders|length }} orders</p>
+
+    {% if orders %}
+    <div style="overflow-x:auto;border-radius:10px;border:1px solid var(--glass-border);">
+      <table class="admin-table">
+        <thead>
+          <tr>
+            <th>#</th><th>Name</th><th>WhatsApp</th>
+            {% if table == 'project_orders' %}<th>Dept</th><th>Language</th>{% endif %}
+            {% if table in ['flex_orders','invitation_orders'] %}<th>Purpose</th>{% endif %}
+            {% if table in ['ppt_orders','paper_orders','report_orders'] %}<th>Dept</th>{% endif %}
+            {% if table == 'website_orders' %}<th>Type</th><th>Tech</th>{% endif %}
+            <th>Amount</th><th>Advance</th><th>Status</th><th>Date</th><th>Manage</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for o in orders %}
+          <tr>
+            <td style="color:var(--neon-green);font-family:'Share Tech Mono',monospace;">{{ o.id }}</td>
+            <td><strong style="color:var(--text-primary);">{{ o.name }}</strong></td>
+            <td><a href="https://wa.me/91{{ o.whatsapp }}" target="_blank" style="color:var(--neon-blue);text-decoration:none;">📱 {{ o.whatsapp }}</a></td>
+            {% if table == 'project_orders' %}<td>{{ o.department }}</td><td>{{ o.language }}</td>{% endif %}
+            {% if table in ['flex_orders','invitation_orders'] %}<td>{{ o.purpose }}</td>{% endif %}
+            {% if table in ['ppt_orders','paper_orders','report_orders'] %}<td>{{ o.department }}</td>{% endif %}
+            {% if table == 'website_orders' %}<td>{{ o.website_type }}</td><td>{{ o.technology }}</td>{% endif %}
+            <td>{% if o.total_amount %}<span style="color:var(--neon-green);">₹{{ o.total_amount }}</span>{% else %}<span style="color:#666;">—</span>{% endif %}</td>
+            <td>
+              {% if o.advance_paid %}<span class="status-badge status-delivered">✅ Paid</span>
+              {% elif o.advance_amount %}<span class="status-badge status-pending">₹{{ o.advance_amount }} Due</span>
+              {% else %}<span style="color:#666;font-size:.8rem;">—</span>{% endif %}
+            </td>
+            <td>
+              <span class="status-badge {% if o.delivery_status == 'Delivered' %}status-delivered{% elif 'Payment' in (o.delivery_status or '') %}status-pending{% else %}status-submitted{% endif %}">
+                {{ o.delivery_status or 'Request Submitted' }}
+              </span>
+            </td>
+            <td style="font-size:.8rem;">{{ (o.created_at or '')[:10] }}</td>
+            <td>
+              <button class="btn-neon btn-neon-sm" style="padding:4px 10px;font-size:.65rem;"
+                data-bs-toggle="modal" data-bs-target="#editModal{{ o.id }}">Edit</button>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Modals -->
+    {% for o in orders %}
+    <div class="modal fade" id="editModal{{ o.id }}" tabindex="-1">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" style="font-family:'Orbitron',monospace;font-size:.9rem;color:var(--neon-blue);">
+              UPDATE ORDER #{{ o.id }} — {{ o.name }}
+            </h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+          </div>
+          <form method="POST" action="/admin/update/{{ table }}/{{ o.id }}">
+            <div class="modal-body">
+              <div class="row g-3">
+                <div class="col-6">
+                  <label class="form-label">Total Amount (₹)</label>
+                  <input type="number" name="total_amount" class="form-control" step="0.01" value="{{ o.total_amount or 0 }}"/>
+                </div>
+                <div class="col-6">
+                  <label class="form-label">Advance Amount (₹)</label>
+                  <input type="number" name="advance_amount" class="form-control" step="0.01" value="{{ o.advance_amount or 0 }}"/>
+                </div>
+                <div class="col-6">
+                  <label class="form-label">Advance Paid?</label>
+                  <div class="form-check mt-2">
+                    <input class="form-check-input" type="checkbox" name="advance_paid" id="ap{{ o.id }}" {% if o.advance_paid %}checked{% endif %}/>
+                    <label class="form-check-label" for="ap{{ o.id }}" style="color:var(--text-muted);">Yes, advance received</label>
+                  </div>
+                </div>
+                <div class="col-6">
+                  <label class="form-label">Full Payment Paid?</label>
+                  <div class="form-check mt-2">
+                    <input class="form-check-input" type="checkbox" name="full_payment_paid" id="fp{{ o.id }}" {% if o.full_payment_paid %}checked{% endif %}/>
+                    <label class="form-check-label" for="fp{{ o.id }}" style="color:var(--text-muted);">Yes, full payment done</label>
+                  </div>
+                </div>
+                <div class="col-12">
+                  <label class="form-label">Payment Method</label>
+                  <select name="payment_method" class="form-select">
+                    <option value="" {% if not o.payment_method %}selected{% endif %}>— Select —</option>
+                    <option {% if o.payment_method=='GPay' %}selected{% endif %}>GPay</option>
+                    <option {% if o.payment_method=='PhonePe' %}selected{% endif %}>PhonePe</option>
+                    <option {% if o.payment_method=='Paytm' %}selected{% endif %}>Paytm</option>
+                    <option {% if o.payment_method=='Cash' %}selected{% endif %}>Cash</option>
+                    <option {% if o.payment_method=='Bank Transfer' %}selected{% endif %}>Bank Transfer</option>
+                  </select>
+                </div>
+                <div class="col-12">
+                  <label class="form-label">Delivery Status</label>
+                  <select name="delivery_status" class="form-select">
+                    {% for s in ['Request Submitted','Amount Fixed','Advance Paid','Work Started','Full Payment Pending','Delivered'] %}
+                    <option {% if o.delivery_status == s %}selected{% endif %}>{{ s }}</option>
+                    {% endfor %}
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn-neon btn-neon-sm" data-bs-dismiss="modal" style="border-color:#666;color:#666;">Cancel</button>
+              <button type="submit" class="btn-neon btn-neon-green btn-neon-sm">💾 Save Changes</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+
+    {% else %}
+    <div style="text-align:center;padding:4rem;color:var(--text-muted);">
+      <div style="font-size:3rem;margin-bottom:1rem;">📭</div>
+      <p>No orders yet for this service.</p>
+    </div>
+    {% endif %}
+  </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,14 @@
+{
+  "name": "TechSpire Services",
+  "short_name": "TechSpire",
+  "description": "Digital services platform for students and professionals",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#050a0f",
+  "theme_color": "#00d4ff",
+  "orientation": "portrait",
+  "icons": [
+    { "src": "/static/images/logo.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/static/images/logo.png", "sizes": "512x512", "type": "image/png" }
+  ]
+}

@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block title %}{{ page_title }} - TechSpire{% endblock %}
+{% block content %}
+<div class="page-header">
+  <a href="/" class="back-link">← Back to Home</a>
+  <h1 class="mt-2">{{ page_title }}</h1>
+</div>
+<section class="form-section" style="padding-top:0;">
+  <div class="container">
+    <div class="form-card">
+      <h2>{{ form_title }}</h2>
+      <p class="form-subtitle">// Fill all details carefully. Admin will contact you via WhatsApp.</p>
+      <hr class="form-divider"/>
+      <form method="POST">
+        {% block form_fields %}{% endblock %}
+        <hr class="form-divider"/>
+        <div class="d-grid mt-3">
+          <button type="submit" class="btn-neon btn-neon-green" style="justify-content:center;">
+            🚀 Submit Request
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
+{% endblock %}

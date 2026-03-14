@@ -1,0 +1,81 @@
+{% extends "form_base.html" %}
+{% set page_title = "Main / Mini Project Development" %}
+{% set form_title = "💻 PROJECT ORDER FORM" %}
+{% block form_fields %}
+<div class="row g-3">
+  <div class="col-md-6">
+    <label class="form-label">Your Name *</label>
+    <input type="text" name="name" class="form-control" required placeholder="Enter your name"/>
+  </div>
+  <div class="col-md-6">
+    <label class="form-label">Teammates</label>
+    <input type="text" name="teammates" class="form-control" placeholder="Names of teammates (if any)"/>
+  </div>
+  <div class="col-md-6">
+    <label class="form-label">Department *</label>
+    <input type="text" name="department" class="form-control" required placeholder="e.g. CSE, IT, ECE"/>
+  </div>
+  <div class="col-md-6">
+    <label class="form-label">Guide Name *</label>
+    <input type="text" name="guide_name" class="form-control" required placeholder="Project guide name"/>
+  </div>
+  <div class="col-12">
+    <label class="form-label">Project Topic (Optional)</label>
+    <input type="text" name="project_topic" class="form-control" placeholder="If you have a topic in mind"/>
+  </div>
+  <div class="col-md-6">
+    <label class="form-label">Email ID *</label>
+    <input type="email" name="email" class="form-control" required placeholder="your@email.com"/>
+  </div>
+  <div class="col-md-6">
+    <label class="form-label">WhatsApp Number *</label>
+    <input type="tel" name="whatsapp" class="form-control" required placeholder="10-digit mobile number" pattern="[0-9]{10}"/>
+  </div>
+  <div class="col-md-6">
+    <label class="form-label">Total Document Pages *</label>
+    <input type="number" name="doc_pages" class="form-control" required min="1" placeholder="e.g. 80"/>
+  </div>
+  <div class="col-md-6">
+    <label class="form-label">Front Page Name *</label>
+    <input type="text" name="front_page_name" class="form-control" required placeholder="College/Institute name"/>
+  </div>
+  <div class="col-md-4">
+    <label class="form-label">Heading Font Size *</label>
+    <input type="number" name="heading_font" class="form-control" required placeholder="e.g. 16" min="8" max="72"/>
+  </div>
+  <div class="col-md-4">
+    <label class="form-label">Sub-Heading Font Size *</label>
+    <input type="number" name="subheading_font" class="form-control" required placeholder="e.g. 14" min="8" max="72"/>
+  </div>
+  <div class="col-md-4">
+    <label class="form-label">Paragraph Font Size *</label>
+    <input type="number" name="para_font" class="form-control" required placeholder="e.g. 12" min="8" max="72"/>
+  </div>
+  <div class="col-md-6">
+    <label class="form-label">Programming Language *</label>
+    <select name="language" class="form-select" required>
+      <option value="">— Select Language —</option>
+      <option>Python</option>
+      <option>HTML</option>
+      <option>CSS</option>
+      <option>JavaScript</option>
+      <option>PHP</option>
+      <option>Mixed</option>
+    </select>
+  </div>
+  <div class="col-md-6">
+    <label class="form-label">Expected Budget *</label>
+    <select name="expected_budget" class="form-select" required>
+      <option value="">— Select Budget Range —</option>
+      <option>₹2500 - ₹3000</option>
+      <option>₹3000 - ₹3500</option>
+      <option>₹3500+</option>
+    </select>
+  </div>
+  <div class="col-12">
+    <div class="info-strip" style="margin:0;padding:1rem;">
+      <small style="color:var(--neon-green);">ℹ️ Budget is for reference only. Admin will confirm the final amount after reviewing your request.</small>
+    </div>
+  </div>
+</div>
+{% endblock %}

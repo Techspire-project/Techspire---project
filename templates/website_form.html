@@ -1,0 +1,45 @@
+{% extends "form_base.html" %}
+{% set page_title = "Website Development" %}
+{% set form_title = "🌐 WEBSITE DEVELOPMENT ORDER" %}
+{% block form_fields %}
+<div class="row g-3">
+  <div class="col-md-6">
+    <label class="form-label">Your Name *</label>
+    <input type="text" name="name" class="form-control" required placeholder="Your full name"/>
+  </div>
+  <div class="col-md-6">
+    <label class="form-label">WhatsApp Number *</label>
+    <input type="tel" name="whatsapp" class="form-control" required placeholder="10-digit number" pattern="[0-9]{10}"/>
+  </div>
+  <div class="col-md-6">
+    <label class="form-label">Website Type *</label>
+    <select name="website_type" class="form-select" required>
+      <option value="">— Select Type —</option>
+      <option>Portfolio</option>
+      <option>Business / Company</option>
+      <option>E-commerce</option>
+      <option>Blog</option>
+      <option>Educational</option>
+      <option>Restaurant / Hotel</option>
+      <option>Event</option>
+      <option>Other</option>
+    </select>
+  </div>
+  <div class="col-md-6">
+    <label class="form-label">Number of Pages *</label>
+    <input type="number" name="num_pages" class="form-control" required min="1" placeholder="e.g. 5"/>
+  </div>
+  <div class="col-12">
+    <label class="form-label">Technology Required *</label>
+    <select name="technology" class="form-select" required>
+      <option value="">— Select Technology —</option>
+      <option>HTML / CSS / JS</option>
+      <option>Python Flask</option>
+      <option>PHP</option>
+      <option>WordPress</option>
+      <option>React JS</option>
+      <option>Mixed / Discuss</option>
+    </select>
+  </div>
+</div>
+{% endblock %}

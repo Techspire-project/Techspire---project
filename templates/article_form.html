@@ -1,0 +1,27 @@
+{% extends "form_base.html" %}
+{% set page_title = "Article Writing" %}
+{% set form_title = "✍️ ARTICLE WRITING ORDER" %}
+{% block form_fields %}
+<div class="row g-3">
+  <div class="col-md-6">
+    <label class="form-label">Your Name *</label>
+    <input type="text" name="name" class="form-control" required placeholder="Your full name"/>
+  </div>
+  <div class="col-md-6">
+    <label class="form-label">WhatsApp Number *</label>
+    <input type="tel" name="whatsapp" class="form-control" required placeholder="10-digit number" pattern="[0-9]{10}"/>
+  </div>
+  <div class="col-12">
+    <label class="form-label">Article Topic *</label>
+    <input type="text" name="topic" class="form-control" required placeholder="What should the article be about?"/>
+  </div>
+  <div class="col-md-6">
+    <label class="form-label">Number of Pages *</label>
+    <input type="number" name="num_pages" class="form-control" required min="1" placeholder="e.g. 3"/>
+  </div>
+  <div class="col-md-6">
+    <label class="form-label">Font Style *</label>
+    <input type="text" name="font_style" class="form-control" required placeholder="e.g. Times New Roman, Arial"/>
+  </div>
+</div>
+{% endblock %}
