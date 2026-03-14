@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # ⚡ TechSpire - Digital Services Platform
 
 ## 🚀 Setup Instructions
@@ -93,3 +94,7 @@ techspire/
 
 ## 📞 WhatsApp Number
 Search for `917010XXXXXX` in all HTML files and replace with your number.
+=======
+# Techspire---project
+ Tech_Spire Digital Services - Projects, Designs, PPT, Reports, Websites for Students
+>>>>>>> bca0f642f13fe1986f3de8611cadc33c9fb0f586
